@@ -2,11 +2,6 @@
 
 Repo for MasterChef testing
 
-This project is intended to be used with the
-[Hardhat Beginners Tutorial](https://hardhat.org/tutorial), but you should be
-able to follow it by yourself by reading the README and exploring its
-`contracts`, `tests`, `scripts` and `frontend` directories.
-
 ## Quick start
 
 The first things you need to do are cloning this repository and installing its
@@ -29,6 +24,7 @@ Alternately you can run the test suite with:
 npx hardhat test
 ```
 
+WARNING DEPLOY SCRIPT IS UNWRITTEN
 Then, on a new terminal, go to the repository's root folder and run this to
 deploy your contract:
 
