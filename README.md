@@ -1,8 +1,6 @@
-# Hardhat Hackathon Boilerplate
+# VeToken Masterchef and Testing
 
-This repository contains a sample project that you can use as the starting point
-for your Ethereum project. It's also a great fit for learning the basics of
-smart contract development.
+Repo for MasterChef testing
 
 This project is intended to be used with the
 [Hardhat Beginners Tutorial](https://hardhat.org/tutorial), but you should be
@@ -26,19 +24,16 @@ Once installed, let's run Hardhat's testing network:
 npx hardhat node
 ```
 
+Alternately you can run the test suite with:
+```sh
+npx hardhat test
+```
+
 Then, on a new terminal, go to the repository's root folder and run this to
 deploy your contract:
 
 ```sh
 npx hardhat run scripts/deploy.js --network localhost
-```
-
-Finally, we can run the frontend with:
-
-```sh
-cd frontend
-npm install
-npm start
 ```
 
 > Note: There's [an issue in `ganache-core`](https://github.com/trufflesuite/ganache-core/issues/650) that can make the `npm install` step fail. 
