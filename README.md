@@ -14,7 +14,7 @@ dependencies:
 
 ```sh
 git clone https://github.com/nomiclabs/hardhat-hackathon-boilerplate.git
-cd hardhat-hackathon-boilerplate
+cd veToken-masterchef
 npm install
 ```
 
