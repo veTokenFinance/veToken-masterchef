@@ -78,3 +78,45 @@ this repository or [our Discord server](https://invite.gg/HardhatSupport).
 Also you can [follow us on Twitter](https://twitter.com/HardhatHQ).
 
 **Happy _building_!**
+
+# VeToken MasterChef Documentation
+
+###### tags: `VeToken Finance` `RaidGuild`
+
+## Deployment
+
+- Deploy MasterChef with the following constructor parameters
+    - reward token contract interface (called _cvx from Convex)
+    - number of reward tokens issued to ***ALL*** pools per block
+    - starting block number; this is the block where rewards will begin to accumulate thereafter
+    - ending block; this is the block after where rewards will no longer accumulate
+
+## Setup
+
+- Add new pools by calling the add function and passing in the allocation points, the target LP which will accumulate rewards and an optional rewarder contract address for secondary rewards
+- Change a pool's allocation points and/or add a new secondary rewarder contract by calling the set function and passing in the pid (the index of the reward pool in the poolInfo array)
+
+## Caveats and Gotchas
+
+- Caveats and gotchas
+    - The rewards cannot be shut off once started.  Convex used a workaround for this by changing all allocation points to only accrue rewards for a pool which is inaccessible.
+    - ***DO NOT*** add the same LP token as a reward target more than once.
+    - Will not support over 32 separate reward pools.
+    - The rewarder member of the PoolInfo struct can be used to add a second reward to pools
+    - There's an unused constant in the contract called BONUS_MULTIPLIER; which is by default not actually used anywhere in the rest of the code
+    - Secondary rewards must be distributed by contracts with the below IRewarder interface
+    - onReward is called when user's deposit or withdraw; and is used to claim secondary rewards
+    - emergency withdraw can be used to forgo user rewards and exit LP tokens from the pool - it can be needed if the reward tokens sent to the MasterChef contract, the rewardPerBlock and the startBlock and endBlock are not perfectly sync'd
+    - Even if the tokens, reward per block, start and end block aren't perfectly sync'd the last person to withdraw should be able to receive most of their reward by calling safeRewardTransfer; which works in the case of rounding errors during .div operations.
+```solidity
+interface IRewarder {
+
+    using SafeERC20 for IERC20;
+
+    function onReward(uint256 pid, address user, address recipient, uint256 sushiAmount, uint256 newLpAmount) 
+    external;
+
+    function pendingTokens(uint256 pid, address user, uint256 sushiAmount)
+    external view returns (IERC20[] memory, uint256[] memory);
+}
+```
